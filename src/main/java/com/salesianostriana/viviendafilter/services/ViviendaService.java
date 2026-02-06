@@ -49,6 +49,10 @@ public class ViviendaService {
         return repository.findBy(spec, q -> q.page(pageable));
     }
 
+    public Vivienda createVivienda(Vivienda vivienda) {
+        return repository.save(vivienda);
+    }
+
     public interface ViviendaSpecifications {
 
         static PredicateSpecification<Vivienda> hasCiudad(String ciudad) {

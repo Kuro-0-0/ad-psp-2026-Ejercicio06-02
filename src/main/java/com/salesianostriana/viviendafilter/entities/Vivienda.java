@@ -4,6 +4,9 @@ import com.salesianostriana.viviendafilter.entities.extras.EstadoVivienda;
 import com.salesianostriana.viviendafilter.entities.extras.TipoVivienda;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.time.LocalDate;
 
@@ -11,27 +14,8 @@ import java.time.LocalDate;
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter @ToString
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class Vivienda {
-
-    /* -- Atributos --
-
-    id - Long
-    titulo - String
-    descripcion - String
-    ciudad - String
-    provincia - String
-    precio - Integer
-    metrosCuadrados - Integer
-    habitaciones - Integer
-    banos - Integer
-    tipo - TipoVivienda (enum)
-    estado - EstadoVivienda (enum)
-    ascensor - Boolean
-    terraza - Boolean
-    garaje - Boolean
-    disponible - Boolean
-    fechaPublicacion - LocalDate
-    * */
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -56,6 +40,7 @@ public class Vivienda {
     @Enumerated(EnumType.STRING)
     private EstadoVivienda estado;
 
+    @CreatedDate
     private LocalDate fechaPublicacion;
 
 

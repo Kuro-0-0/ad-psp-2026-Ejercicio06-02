@@ -1,24 +1,39 @@
 package com.salesianostriana.viviendafilter.controllers;
 
+import com.salesianostriana.viviendafilter.entities.dtos.ViviendaCreateRequest;
 import com.salesianostriana.viviendafilter.entities.dtos.ViviendaFilter;
 import com.salesianostriana.viviendafilter.entities.dtos.ViviendaResponse;
 import com.salesianostriana.viviendafilter.entities.extras.EstadoVivienda;
 import com.salesianostriana.viviendafilter.entities.extras.TipoVivienda;
 import com.salesianostriana.viviendafilter.services.ViviendaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller @RequiredArgsConstructor
 public class ViviendaController {
 
     private final ViviendaService service;
+
+    @PostMapping("/api/v1/viviendas")
+    public ResponseEntity<ViviendaResponse> createVivienda(
+            @Valid @RequestBody ViviendaCreateRequest request
+    ) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ViviendaResponse.to(service.createVivienda(request.to())));
+    }
+
+
 
     @GetMapping("/api/v1/viviendas")
     public ResponseEntity<Page<ViviendaResponse>> getAllViviendas(
